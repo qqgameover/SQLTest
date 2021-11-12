@@ -26,8 +26,8 @@ namespace SQLTest
                                 WHERE LastName LIKE '%Teacher%'";
 
             var addOne = @"INSERT INTO Person
-                            (FirstName, LastName, MilddeName)
-                            VALUES('Terje', 'Teacher', null)";
+                            (FirstName, LastName)
+                            VALUES('Terje', 'Teacher')";
             //await conn.ExecuteAsync(addOne);
             var persons = await conn.QueryAsync<Person>(readAll);
             persons.ToList().ForEach(x => Console.WriteLine($"Id={x.Id}, {x.FirstName} {x.LastName}"));
