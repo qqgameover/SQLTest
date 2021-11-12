@@ -27,7 +27,7 @@ namespace SQLTest
 
             var addOne = @"INSERT INTO Person
                             (FirstName, LastName)
-                            VALUES('Terje', 'Teacher')";
+                            VALUES('Ola', 'Krutt')";
             //await conn.ExecuteAsync(addOne);
             var persons = await conn.QueryAsync<Person>(readAll);
             persons.ToList().ForEach(x => Console.WriteLine($"Id={x.Id}, {x.FirstName} {x.LastName}"));
