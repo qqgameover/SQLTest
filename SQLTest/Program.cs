@@ -23,16 +23,21 @@ namespace SQLTest
 
             var readAll = @"SELECT * from Person";
             var spesificQuery = @"SELECT FirstName, LastName, Id from Person 
-                                WHERE LastName LIKE '%Teacher%'";
+                                WHERE FirstName = @spes";
 
             var addOne = @"INSERT INTO Person
                             (FirstName, LastName)
-                            VALUES('Ola', 'Krutt')";
-            //await conn.ExecuteAsync(addOne);
+                            VALUES(@FirstName, @LastName)";
+
+            var updateOne = @"UPDATE Person
+                              SET LastName = @LastName
+                              WHERE Id = @Id";
+            //var rowsAffected = await conn.ExecuteAsync(addOne, new {FirstName = "AddTest", LastName = "YesSir"});
+            var updateTerje = await conn.ExecuteAsync(updateOne, new {LastName = "Kolderup", Id = 8});
             var persons = await conn.QueryAsync<Person>(readAll);
             persons.ToList().ForEach(x => Console.WriteLine($"Id={x.Id}, {x.FirstName} {x.LastName}"));
             Console.WriteLine();
-            var teachers = await conn.QueryAsync(spesificQuery);
+            var teachers = await conn.QueryAsync(spesificQuery, new {spes = @"Terje"});
             teachers.ToList().ForEach(x => Console.WriteLine($"Id={x.Id}, {x.FirstName} {x.LastName}"));
         }
     }
