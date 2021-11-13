@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Immutable;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,12 +34,12 @@ namespace SQLTest
                               SET LastName = @LastName
                               WHERE Id = @Id";
             //var rowsAffected = await conn.ExecuteAsync(addOne, new {FirstName = "AddTest", LastName = "YesSir"});
-            var updateTerje = await conn.ExecuteAsync(updateOne, new {LastName = "Kolderup", Id = 8});
+            //var updateTerje = await conn.ExecuteAsync(updateOne, new {LastName = "Kolderup", Id = 8});
             var persons = await conn.QueryAsync<Person>(readAll);
             persons.ToList().ForEach(x => Console.WriteLine($"Id={x.Id}, {x.FirstName} {x.LastName}"));
             Console.WriteLine();
-            var teachers = await conn.QueryAsync(spesificQuery, new {spes = @"Terje"});
-            teachers.ToList().ForEach(x => Console.WriteLine($"Id={x.Id}, {x.FirstName} {x.LastName}"));
+            var teachers = await conn.QueryAsync<Person>(spesificQuery, new {spes = @"Terje"});
+            teachers.ToImmutableList().ForEach(x => Console.WriteLine($"Id={x.Id}, {x.FirstName} {x.LastName}"));
         }
     }
 }
