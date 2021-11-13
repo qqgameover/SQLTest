@@ -20,8 +20,6 @@ namespace SQLTest
 
         public async Task<int> Create(Person person)
         {
-            var type = person.GetType();
-            var props = type.GetProperties();
             var sql = @"INSERT INTO Person
                         (FirstName, LastName)
                         VALUES(@FirstName, @LastName)";
@@ -31,7 +29,7 @@ namespace SQLTest
 
         public async Task<IEnumerable<Person>> ReadAll()
         {
-            var sql = @"SELECT Id, FirstName, LastName, BirthYear
+            var sql = @"SELECT Id, FirstName, LastName
                         FROM Person";
             return await _connection.QueryAsync<Person>(sql);
         }
