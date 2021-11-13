@@ -34,16 +34,10 @@ namespace SQLTest
             return await _connection.QueryAsync<Person>(sql);
         }
 
-        public async Task<IEnumerable<Person>> ReadYoungerThan(int birthYearMin)
-        {
-            var sql = @"SELECT Id, FirstName, LastName, BirthYear
-                        FROM Person WHERE BirthYear > @BirthYearMin";
-            return await _connection.QueryAsync<Person>(sql, new { BirthYearMin = birthYearMin });
-        }
 
         public async Task<IEnumerable<Person>> ReadOneById(int id)
         {
-            var sql = @"SELECT Id, FirstName, LastName, BirthYear
+            var sql = @"SELECT Id, FirstName, LastName
                         FROM Person WHERE Id = @Id";
             return await _connection.QueryAsync<Person>(sql, new { Id = id });
         }
@@ -51,7 +45,7 @@ namespace SQLTest
         public async Task<int> Update(Person person)
         {
             var sql = @"UPDATE Person
-                        SET LastName = @LastName, FirstName = @FirstName, BirthYear = @BirthYear
+                        SET LastName = @LastName, FirstName = @FirstName
                         WHERE Id = @Id";
             return await _connection.ExecuteAsync(sql, person);
         }
